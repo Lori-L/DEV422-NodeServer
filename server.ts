@@ -1,6 +1,7 @@
 import * as express from "express";
 import * as path from "path";
 import axios from "axios";
+import { userRouter } from "./server/Router/UserRouter";
 
 const app = express();
 const port = 3000;
@@ -18,6 +19,10 @@ app.get("/", async (req, res) => {
     console.error(error);
   }
 });
+
+// routes
+
+app.use("/user", userRouter);
 
 app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}/`);
