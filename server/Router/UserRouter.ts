@@ -1,21 +1,14 @@
 import { Router } from "express";
+import { Connect } from "./connect";
+import { readWritePrimary } from "../../keys/keys";
 export const userRouter = Router();
+const { MongoClient } = require("mongodb");
 
-const { MongoClient, ServerApiVersion } = require("mongodb");
-const { readWritePrimary } = require("../../keys/keys.ts");
-const uri = readWritePrimary;
-const client = new MongoClient(uri, {
-  serverApi: {
-    version: ServerApiVersion.v1,
-    strict: true,
-    deprecationErrors: true,
-  },
-});
+const client = new MongoClient(readWritePrimary, { useNewUrlParser: true });
 
 userRouter.get("/test", async (req, res) => {
   try {
-    const result = run(); // mongo function to get user
-    res.send(result);
+    Connect(); // mongo function to get user
   } catch (error) {
     res.send(error);
   }
