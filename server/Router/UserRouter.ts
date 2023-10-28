@@ -5,40 +5,42 @@ export const userRouter = Router();
 const { MongoClient } = require("mongodb");
 
 const client = new MongoClient(readWritePrimary, { useNewUrlParser: true });
+const db = client.db("dnddb");
 
 userRouter.get("/test", async (req, res) => {
   try {
-    Connect(); // mongo function to get user
-  } catch (error) {
+    Connect();
+    res.send('Database Connected');
+  }
+  catch (error) {
     res.send(error);
   }
 });
 
-userRouter.post("/", async (req, res) => {
+userRouter.get("/id?", async (req, res) => {
   try {
-    const result = ""; // mongo function to create user
-    res.send(result);
-  } catch (error) {
-    res.send(error);
+    var result = await db.collection('users').findOne(
+      {username: req.query.username});
+    res.send(result._id);
+  }
+  catch (err) {
+    res.send(err);
   }
 });
 
-userRouter.post("/login", async (req, res) => {
+userRouter.get("/password?", async (req, res) => {
   try {
-    let isUser = false;
-    const validUsername = req.body.username === "user"; // mongo function to check if user exists
-
-    if (validUsername) {
-      isUser = req.body.password === "pass"; // mongo function to check if user exists
+    var result = await db.collection('users').findOne(
+      {username: req.query.username});
+    if (req.query.password == result.password) {
+      res.send("true");
     }
-
-    if (isUser) {
-      res.send({ message: "Successfully logged in" });
-    } else {
-      res.send({ message: "Incorrect username or password" });
+    else {
+      res.send("false");
     }
-  } catch (error) {
-    res.send(error);
+  }
+  catch (err) {
+    res.send(err);
   }
 });
 
@@ -51,7 +53,8 @@ userRouter.post("/signup", async (req, res) => {
     } else {
       res.send({ message: "Successfully signed up" }); // respond with error message "user already exists"
     }
-  } catch (error) {
+  }
+  catch (error) {
     res.send(error);
   }
 });
@@ -60,25 +63,8 @@ userRouter.delete("/", async (req, res) => {
   try {
     const result = ""; // mongo function to delete user
     res.send(result);
-  } catch (error) {
+  } 
+  catch (error) {
     res.send(error);
   }
 });
-
-async function run() {
-  try {
-    // Connect the client to the server    (optional starting in v4.7)
-    console.log("Connecting to the db");
-
-    await client.connect();
-    // Send a ping to confirm a successful connection
-    await client.db("admin").command({ ping: 1 });
-    var result =
-      "Pinged your deployment. You successfully connected to MongoDB!";
-    return result;
-  } finally {
-    // Ensures that the client will close when you finish/error
-    await client.close();
-    return "closed";
-  }
-}
