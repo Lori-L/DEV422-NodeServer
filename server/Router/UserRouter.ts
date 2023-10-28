@@ -3,6 +3,7 @@ import { Connect } from "./connect";
 import { readWritePrimary } from "../../keys/keys";
 export const userRouter = Router();
 const { MongoClient } = require("mongodb");
+var ObjectId = require('mongodb').ObjectId;
 
 const client = new MongoClient(readWritePrimary, { useNewUrlParser: true });
 const db = client.db("dnddb");
@@ -20,7 +21,8 @@ userRouter.get("/test", async (req, res) => {
 userRouter.get("/id?", async (req, res) => {
   try {
     var result = await db.collection('users').findOne(
-      {username: req.query.username});
+        {username: req.query.username}
+      );
     res.send(result._id);
   }
   catch (err) {
@@ -31,12 +33,13 @@ userRouter.get("/id?", async (req, res) => {
 userRouter.get("/password?", async (req, res) => {
   try {
     var result = await db.collection('users').findOne(
-      {username: req.query.username});
+        {username: req.query.username}
+      );
     if (req.query.password == result.password) {
-      res.send("true");
+      res.send({message: "true"});
     }
     else {
-      res.send("false");
+      res.send({message: "false"});
     }
   }
   catch (err) {
@@ -44,14 +47,33 @@ userRouter.get("/password?", async (req, res) => {
   }
 });
 
-userRouter.post("/signup", async (req, res) => {
+userRouter.post("/signup?", async (req, res) => {
   try {
-    const isUsernameTaken = req.body.username === "user"; // mongo function to check if user exists
+    // const isUsernameTaken = req.body.username === "user"; // mongo function to check if user exists
 
-    if (isUsernameTaken) {
+    // if (isUsernameTaken) {
+    //   res.send({ message: "User already exists" });
+    // } else {
+    //   res.send({ message: "Successfully signed up" }); // respond with error message "user already exists"
+    // }
+    var result = await db.collection('users').findOne(
+        {username: req.body.username}
+      );
+    if (result != null) {
       res.send({ message: "User already exists" });
-    } else {
-      res.send({ message: "Successfully signed up" }); // respond with error message "user already exists"
+    }
+    else {
+      console.log("Trying");
+      var user = {
+        _id: new ObjectId(),
+        username: req.body.username,
+        password: req.body.password,
+        email: req.body.email,
+        usersShard: 0
+      };
+      db.collection('users').insertOne(user);
+      res.send({ message: "Successfully signed up" });
+      console.log("Submitted");
     }
   }
   catch (error) {
