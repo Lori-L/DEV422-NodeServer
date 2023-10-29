@@ -26,12 +26,14 @@ userRouter.get("/password?", async (req, res) => {
     if (result == null) {
       res.send({message: false});
     }
-    if (req.query.password == result.password) {
-      res.send({message: "true",
-        _id: result._id});
-    }
     else {
-      res.send({message: "false"});
+      if (req.query.password == result.password) {
+        res.send({message: "true",
+          _id: result._id});
+      }
+      else {
+        res.send({message: "false"});
+      }
     }
   }
   catch (err) {
