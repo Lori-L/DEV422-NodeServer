@@ -47,7 +47,7 @@ userRouter.post("/signup?", async (req, res) => {
         {username: req.body.username}
       );
     if (result != null) {
-      res.send({ message: "User already exists" });
+      res.send({ message: "false" });
     }
     else {
       var user = {
@@ -58,7 +58,7 @@ userRouter.post("/signup?", async (req, res) => {
         usersShard: 0
       };
       db.collection('users').insertOne(user);
-      res.send({ message: "Successfully signed up",
+      res.send({ message: "true",
         id: user._id });
     }
   }
