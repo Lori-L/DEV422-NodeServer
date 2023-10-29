@@ -23,6 +23,9 @@ userRouter.get("/password?", async (req, res) => {
     var result = await db.collection('users').findOne(
         {username: req.query.username}
       );
+    if (result == null) {
+      res.send({message: false});
+    }
     if (req.query.password == result.password) {
       res.send({message: "true",
         _id: result._id});
