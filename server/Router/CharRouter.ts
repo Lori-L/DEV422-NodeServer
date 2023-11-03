@@ -7,3 +7,11 @@ const db = client.db("dnddb");
 const chars = db.collection('characters');
 const ObjectId = require('mongodb').ObjectId;
 
+charRouter.get('/', async (req, res) => {
+  try {
+    res.send({message : "Pathing correct"});
+  }
+  catch (err) {
+    res.send({message: err});
+  }
+});
