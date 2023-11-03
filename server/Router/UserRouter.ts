@@ -4,11 +4,12 @@ export const userRouter = Router();
 const { MongoClient } = require("mongodb");
 const client = new MongoClient(readWritePrimary, { useNewUrlParser: true });
 const db = client.db("dnddb");
+const users = db.collection('users');
 const ObjectId = require('mongodb').ObjectId;
 
 userRouter.get("/id?", async (req, res) => {
   try {
-    var result = await db.collection('users').findOne(
+    var result = await users.findOne(
         {username: req.query.username}
       );
     res.send(result._id);
@@ -20,7 +21,7 @@ userRouter.get("/id?", async (req, res) => {
 
 userRouter.get("/password?", async (req, res) => {
   try {
-    var result = await db.collection('users').findOne(
+    var result = await users.findOne(
         {username: req.query.username}
       );
     if (result == null) {
@@ -28,8 +29,7 @@ userRouter.get("/password?", async (req, res) => {
     }
     else {
       if (req.query.password == result.password) {
-        res.send({message: "true",
-          _id: result._id});
+        res.send({message: "true", _id: result._id});
       }
       else {
         res.send({message: "false"});
@@ -43,7 +43,7 @@ userRouter.get("/password?", async (req, res) => {
 
 userRouter.post("/signup?", async (req, res) => {
   try {
-    var result = await db.collection('users').findOne(
+    var result = await users.findOne(
         {username: req.body.username}
       );
     if (result != null) {
@@ -57,9 +57,8 @@ userRouter.post("/signup?", async (req, res) => {
         email: req.body.email,
         usersShard: 0
       };
-      db.collection('users').insertOne(user);
-      res.send({ message: "true",
-        id: user._id });
+      users.insertOne(user);
+      res.send({ message: "true", id: user._id });
     }
   }
   catch (err) {
