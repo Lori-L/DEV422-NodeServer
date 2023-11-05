@@ -244,7 +244,8 @@ charRouter.get('/active?', async (req, res) => {
 
 charRouter.delete('/one?', async (req, res) =>  {
   try {
-    var result = await chars.findOne({_id: req.query._id});
+    var convertedId = ObjectId(req.query._id);
+    var result = await chars.findOne({_id: convertedId});
     if (result != null) {
       chars.deleteOne({_id: req.query._id});
       res.send({message: "true"});
