@@ -17,6 +17,8 @@ charRouter.get('/', async (req, res) => {
   }
 });
 
+
+
 charRouter.post('/create', async (req, res) =>  {
   try {
     var char = {
@@ -218,7 +220,7 @@ charRouter.get('/active?', async (req, res) => {
   }
 });
 
-charRouter.delete('/', async (req, res) =>  {
+charRouter.delete('/one?', async (req, res) =>  {
   try {
     var result = await chars.findOne({_id: req.query._id});
     if (result != null) {
