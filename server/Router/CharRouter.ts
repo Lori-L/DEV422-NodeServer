@@ -17,7 +17,27 @@ charRouter.get('/', async (req, res) => {
   }
 });
 
+var nameArray = ["Billy", "Clark", "Bruce", "Diane", "Barry"];
 
+charRouter.post('/testFill', async (req, res) => {
+  try {
+    for (let i = 0; i < 5; i++) {
+      var char = {
+        _id: new ObjectId(),
+        userId: req.body.userId,
+        name: nameArray[i],
+        overallLevel: 5,
+        active: true,
+        favorited: true,
+        race: "Human",
+        charactersShard: 0
+      }
+    }
+  }
+  catch (err) {
+    res.send({message: err});
+  }
+});
 
 charRouter.post('/create', async (req, res) =>  {
   try {
