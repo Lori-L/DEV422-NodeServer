@@ -21,7 +21,7 @@ charRouter.post('/create', async (req, res) =>  {
   try {
     var char = {
       _id: new ObjectId(),
-      userID: req.body.userID,
+      userId: req.body.userId,
       name: req.body.name,
       overallLevel: req.body.overallLevel,
       active: true,
@@ -32,7 +32,6 @@ charRouter.post('/create', async (req, res) =>  {
         chosenProficiencyIndex: req.body.race.chosenProficiencyIndex
       },
       charClasses: { // Booleans for used classes
-        artificer: req.body.charClasses.artificer,
         barbarian: req.body.charClasses.barbarian,
         bard: req.body.charClasses.bard,
         cleric: req.body.charClasses.cleric,
@@ -44,15 +43,6 @@ charRouter.post('/create', async (req, res) =>  {
         rogue: req.body.charClasses.rogue,
         warlock: req.body.charClasses.warlock,
         wizard: req.body.charClasses.wizard
-      },
-      artificer: {
-        classIndex: req.body.charClass.classIndex,
-        classLevel: req.body.charClass.classLevel,
-        chosenProficiencyIndex: req.body.charClass.chosenProficiencyIndex,
-        spellcaster: req.body.charClass.spellcaster,
-        knownSpellsIndex: req.body.charClass.knownSpellsIndex,
-        preparedSpellsIndex: req.body.charClass.preparedSpellsIndex,
-        subclassIndex: req.body.charClass.subclassIndex
       },
       barbarian: {
         classIndex: req.body.charClass.classIndex,
@@ -196,7 +186,7 @@ charRouter.post('/deactivate', async (req, res) => {
 
 charRouter.get('/all?', async (req, res) => {
   try {
-    var result = await chars.find({userID: req.query.userID}).toArray();
+    var result = await chars.find({userId: req.query.userId}).toArray();
     if (result.length > 0) {
       res.send({message: "true", result});
     }
@@ -213,7 +203,7 @@ charRouter.get('/active?', async (req, res) => {
   try {
     var result = await chars.find({
       $and: [
-        {userID: req.query.userID},
+        {userId: req.query.userId},
         {active: true}
       ]}).toArray();
     if (result.length > 0) {
