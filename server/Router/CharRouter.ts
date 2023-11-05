@@ -35,6 +35,7 @@ charRouter.post('/testFill', async (req, res) => {
       }
       chars.insertOne(char);
     }
+    res.send({ message: "message" });
   }
   catch (err) {
     res.send({message: err});
