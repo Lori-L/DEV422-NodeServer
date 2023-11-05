@@ -28,7 +28,7 @@ charRouter.post('/testFill', async (req, res) => {
         name: nameArray[i],
         overallLevel: 5,
         active: true,
-        favorited: true,
+        favorite: true,
         race: "Human",
         charClass: "Fighter",
         charactersShard: 0
@@ -49,7 +49,7 @@ charRouter.post('/create', async (req, res) =>  {
       name: req.body.name,
       overallLevel: req.body.overallLevel,
       active: true,
-      favorited: false,
+      favorite: false,
       race: {
         raceIndex: req.body.race.raceIndex,
         chosenLanguageIndex: req.body.race.chosenLanguageIndex,
