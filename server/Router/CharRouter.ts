@@ -32,6 +32,7 @@ charRouter.post('/testFill', async (req, res) => {
         race: "Human",
         charactersShard: 0
       }
+      chars.insertOne(char);
     }
   }
   catch (err) {
