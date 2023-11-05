@@ -30,6 +30,7 @@ charRouter.post('/testFill', async (req, res) => {
         active: true,
         favorited: true,
         race: "Human",
+        charClass: "Fighter",
         charactersShard: 0
       }
       chars.insertOne(char);
