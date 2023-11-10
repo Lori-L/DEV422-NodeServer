@@ -243,6 +243,16 @@ charRouter.get('/active?', async (req, res) => {
   }
 });
 
+charRouter.post('/whole', async (req, res) => {
+  try {
+    chars.insertOne(req.body);
+    res.send({message : "Tried0"});
+  }
+  catch (err) {
+    res.send({message: err});
+  }
+});
+
 charRouter.delete('/one?', async (req, res) =>  {
   try {
     var convertedId = new ObjectId(req.query._id);
