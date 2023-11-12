@@ -18,24 +18,75 @@ charRouter.get('/', async (req, res) => {
 });
 
 var nameArray = ["Billy", "Clark", "Bruce", "Diane", "Barry"];
+var barbarian = {
+  classIndex: 'barbarian',
+  classLevel: 1,
+  chosenProficiencyIndex: ['skill-intimidation', 'skill-animal-handling'],
+  uniqueClassChoices: null,
+  spellcaster: false,
+  spellcasterInfo: null,
+  subclassSelected: false,
+  subclassInfo: null
+}
+var classArray = [
+  barbarian
+];
+var alignmentArray = [
+  'lawful-good', 'neutral-good', 'chaotic-good',
+  'lawful-neutral', 'true-neutral', 'chaotic-neutral',
+  'lawful-evil', 'neutral-evil', 'chaotic-evil',
+];
 
 charRouter.post('/testFill', async (req, res) => {
   try {
-    for (let i = 0; i < 5; i++) {
+    var charArray = [];
+    for (let i = 0; i < 2; i++) {
       var char = {
         _id: new ObjectId(),
+
         userId: req.body.userId,
-        name: nameArray[i],
-        overallLevel: 5,
         active: true,
         favorite: true,
-        race: "Human",
-        charClass: "Fighter",
-        charactersShard: 0
+        startingEquipmentSelected: true,
+
+        name: nameArray[Math.floor(Math.random() * 5)],
+        overallLevel: Math.floor(Math.random() * 20),
+        race: {
+          raceIndex: 'tiefling',
+          chosenLanguageIndex: [],
+          chosenProficiencyIndex: []
+        },
+        classes: [classArray[Math.floor(Math.random() * classArray.length)]],
+        abilityScores: [15, 13, 14, 8, 12, 10],
+        equippedItemsIndexes: ['club'],
+        inventoryItemsIndexes: ['handaxe'],
+
+        personality: {
+          alignmentIndex: alignmentArray[Math.floor(Math.random() * 9)],
+          personalityTraits: ['personalityTrait'],
+          ideals: ['ideal'],
+          bonds: ['bond'],
+          flaws: ['flaw']
+        },
+
+        appearance: {
+          age: 45,
+          height: 'tall',
+          weight: 'weight',
+          eyes: 'eyes',
+          skin: 'skin',
+          hair: 'hair',
+          otherNotes: 'other appearance note'
+        },
+        
+        backstory: 'likes to hit things',
+
+        charactersShard: 3
       }
-      chars.insertOne(char);
+      charArray.push(char);
     }
-    res.send({ message: "message" });
+    await chars.insertMany(charArray);
+    res.send({ message: "true" });
   }
   catch (err) {
     res.send({message: err});
