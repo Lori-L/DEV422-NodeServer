@@ -350,6 +350,40 @@ charRouter.get('/one?', async (req, res) =>  {
   }
 });
 
+charRouter.post('/favorite', async (req, res) =>  {
+  try {
+    var convertedId = new ObjectId(req.query._id);
+    var result = await chars.findOne({_id: convertedId});
+    if (result != null) {
+      chars.updateOne( {_id: convertedId}, {$set: {favorite: true} } );
+      res.send({message: "true"});
+    }
+    else {
+      res.send({message: "false"});
+    }
+  }
+  catch (err) {
+    res.send({message: err});
+  }
+});
+
+charRouter.post('/unfavorite', async (req, res) =>  {
+  try {
+    var convertedId = new ObjectId(req.query._id);
+    var result = await chars.findOne({_id: convertedId});
+    if (result != null) {
+      chars.updateOne( {_id: convertedId}, {$set: {favorite: false} } );
+      res.send({message: "true"});
+    }
+    else {
+      res.send({message: "false"});
+    }
+  }
+  catch (err) {
+    res.send({message: err});
+  }
+});
+
 charRouter.post('/whole', async (req, res) => {
   try {
     chars.insertOne(req.body);
