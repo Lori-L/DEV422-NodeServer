@@ -121,7 +121,7 @@ charRouter.post('/testFill', async (req, res) => {
         
         backstory: 'likes to hit things',
 
-        charactersShard: 3
+        charactersShard: 4
       }
       charArray.push(char);
     }
@@ -352,7 +352,7 @@ charRouter.get('/one?', async (req, res) =>  {
 
 charRouter.post('/favorite', async (req, res) =>  {
   try {
-    var convertedId = new ObjectId(req.query._id);
+    var convertedId = new ObjectId(req.body._id);
     var result = await chars.findOne({_id: convertedId});
     if (result != null) {
       chars.updateOne( {_id: convertedId}, {$set: {favorite: true} } );
@@ -369,7 +369,7 @@ charRouter.post('/favorite', async (req, res) =>  {
 
 charRouter.post('/unfavorite', async (req, res) =>  {
   try {
-    var convertedId = new ObjectId(req.query._id);
+    var convertedId = new ObjectId(req.body._id);
     var result = await chars.findOne({_id: convertedId});
     if (result != null) {
       chars.updateOne( {_id: convertedId}, {$set: {favorite: false} } );
