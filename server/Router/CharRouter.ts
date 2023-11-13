@@ -28,8 +28,38 @@ var barbarian = {
   subclassSelected: false,
   subclassInfo: null
 }
+var fighter = {
+  classIndex: 'fighter',
+  classLevel: 1,
+  chosenProficiencyIndex: ['skill-acrobatics', 'skill-insight'],
+  uniqueClassChoices: null,
+  spellcaster: false,
+  spellcasterInfo: null,
+  subclassSelected: false,
+  subclassInfo: null
+}
+var ranger = {
+  classIndex: 'ranger',
+  classLevel: 1,
+  chosenProficiencyIndex: ['skill-athletics', 'skill-perception'],
+  uniqueClassChoices: null,
+  spellcaster: false,
+  spellcasterInfo: null,
+  subclassSelected: false,
+  subclassInfo: null
+}
+var rogue = {
+  classIndex: 'rogue',
+  classLevel: 1,
+  chosenProficiencyIndex: ['skill-survival', 'skill-stealth'],
+  uniqueClassChoices: null,
+  spellcaster: false,
+  spellcasterInfo: null,
+  subclassSelected: false,
+  subclassInfo: null
+}
 var classArray = [
-  barbarian
+  barbarian, fighter, ranger, rogue
 ];
 var alignmentArray = [
   'lawful-good', 'neutral-good', 'chaotic-good',
