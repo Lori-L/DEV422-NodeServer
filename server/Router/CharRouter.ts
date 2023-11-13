@@ -66,6 +66,10 @@ var alignmentArray = [
   'lawful-neutral', 'true-neutral', 'chaotic-neutral',
   'lawful-evil', 'neutral-evil', 'chaotic-evil',
 ];
+var raceArray = [
+  'dragonborn', 'dwarf', 'elf', 'gnome', 'human', 'half-elf', 'halfling',
+  'half-orc', 'human', 'tiefling'
+]
 
 charRouter.post('/testFill', async (req, res) => {
   try {
@@ -82,7 +86,7 @@ charRouter.post('/testFill', async (req, res) => {
         name: nameArray[Math.floor(Math.random() * 5)],
         overallLevel: Math.floor(Math.random() * 20),
         race: {
-          raceIndex: 'tiefling',
+          raceIndex: raceArray[Math.floor(Math.random() * raceArray.length)],
           chosenLanguageIndex: [],
           chosenProficiencyIndex: []
         },
