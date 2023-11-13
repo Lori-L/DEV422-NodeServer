@@ -70,6 +70,7 @@ var raceArray = [
   'dragonborn', 'dwarf', 'elf', 'gnome', 'human', 'half-elf', 'halfling',
   'half-orc', 'human', 'tiefling'
 ]
+var randHP = Math.floor(Math.random() * 100);
 
 charRouter.post('/testFill', async (req, res) => {
   try {
@@ -92,6 +93,11 @@ charRouter.post('/testFill', async (req, res) => {
         },
         classes: [classArray[Math.floor(Math.random() * classArray.length)]],
         abilityScores: [15, 13, 14, 8, 12, 10],
+        hp: {
+          maxHP: randHP,
+          currentHP: randHP - Math.floor(Math.random() * randHP),
+          tempHP: 0
+        },
         equippedItemsIndexes: ['club'],
         inventoryItemsIndexes: ['handaxe'],
 
