@@ -81,7 +81,7 @@ charRouter.post('/testFill', async (req, res) => {
 
         userId: req.body.userId,
         active: true,
-        favorite: true,
+        favorite: false,
         startingEquipmentSelected: true,
 
         name: nameArray[Math.floor(Math.random() * 5)],
