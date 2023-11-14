@@ -85,7 +85,7 @@ charRouter.post('/testFill', async (req, res) => {
         startingEquipmentSelected: true,
 
         name: nameArray[Math.floor(Math.random() * 5)],
-        overallLevel: Math.floor(Math.random() * 20),
+        overallLevel: Math.floor(Math.random() * 19) + 1,
         race: {
           raceIndex: raceArray[Math.floor(Math.random() * raceArray.length)],
           chosenLanguageIndex: [],
