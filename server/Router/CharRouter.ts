@@ -83,6 +83,7 @@ charRouter.post('/testFill', async (req, res) => {
         active: true,
         favorite: false,
         startingEquipmentSelected: true,
+        defaultStartingEquipmentCollected: true,
 
         name: nameArray[Math.floor(Math.random() * 5)],
         overallLevel: Math.floor(Math.random() * 19) + 1,
