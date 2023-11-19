@@ -122,7 +122,7 @@ charRouter.post('/testFill', async (req, res) => {
         
         backstory: 'likes to hit things',
 
-        charactersShard: 4
+        charactersShard: 5
       }
       charArray.push(char);
     }
