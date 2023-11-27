@@ -192,6 +192,101 @@ charRouter.get('/all?', async (req, res) => {
   }
 });
 
+charRouter.post('/testWizard', async (req, res) => {
+  try {
+    var charArray = [];
+    for (let i = 0; i < 2; i++) {
+      var char = {
+        _id: new ObjectId(),
+
+        userId: req.body.userId,
+        active: true,
+        favorite: false,
+        startingEquipmentSelected: true,
+
+        name: nameArray[Math.floor(Math.random() * 5)],
+        overallLevel: Math.floor(Math.random() * 19) + 1,
+        race: {
+          raceIndex: raceArray[Math.floor(Math.random() * raceArray.length)],
+          chosenLanguageIndex: [],
+          chosenProficiencyIndex: []
+        },
+        classes: [classArray[4]],
+        abilityScores: [15, 13, 14, 8, 12, 10],
+        hp: {
+          maxHP: randHP,
+          currentHP: randHP - Math.floor(Math.random() * randHP),
+          tempHP: 0
+        },
+        equippedItemsIndexes: ['club'],
+        inventoryItemsIndexes: ['handaxe'],
+
+        personality: {
+          alignmentIndex: alignmentArray[Math.floor(Math.random() * 9)],
+          personalityTraits: ['personalityTrait'],
+          ideals: ['ideal'],
+          bonds: ['bond'],
+          flaws: ['flaw']
+        },
+
+        appearance: {
+          age: 45,
+          height: 'tall',
+          weight: 'weight',
+          eyes: 'eyes',
+          skin: 'skin',
+          hair: 'hair',
+          otherNotes: 'other appearance note'
+        },
+        
+        backstory: 'likes to hit things',
+
+        charactersShard: 4
+      }
+      charArray.push(char);
+    }
+    await chars.insertMany(charArray);
+    res.send({ message: "true" });
+  }
+  catch (err) {
+    res.send({message: err});
+  }
+});
+
+charRouter.post('/deactivate', async (req, res) => {
+  try {
+    var result = await chars.findOne({_id: req.body._id});
+    if (result != null) {
+      chars.updateOne(
+        {_id: req.body._id},
+        {$set: {active: false}}
+      );
+      res.send({message: "true"});
+    }
+    else {
+      res.send({message: "false"});
+    }
+  }
+  catch (err) {
+    res.send({message: err});
+  }
+});
+
+charRouter.get('/all?', async (req, res) => {
+  try {
+    var result = await chars.find({userId: req.query.userId}).toArray();
+    if (result.length > 0) {
+      res.send({message: "true", result});
+    }
+    else {
+      res.send({message: "false"});
+    }
+  }
+  catch (err) {
+    res.send({message: err});
+  }
+});
+
 charRouter.get('/active?', async (req, res) => {
   try {
     var result = await chars.find({
