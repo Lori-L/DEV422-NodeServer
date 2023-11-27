@@ -18,6 +18,23 @@ charRouter.get('/', async (req, res) => {
 });
 
 var nameArray = ["Billy", "Clark", "Bruce", "Diane", "Barry"];
+
+var casterObject = {
+  cantripsKnown: [
+    ['acid-splash', 'Acid Splash'],
+    ['dancing-lights', 'Dancing Lights'],
+    ['mage-hand', 'Mage Hand']
+  ],
+  knowsCantrips: true,
+  learnsSpells: true,
+  prepareSpells: true,
+  spellCastingAbility: 'int',
+  spellsKnown: [
+    ['burning-hands', 'Burning Hands'],
+    ['mage-armor', 'Mage Armor']
+  ]
+};
+
 var barbarian = {
   classIndex: 'barbarian',
   classLevel: 1,
@@ -58,8 +75,16 @@ var rogue = {
   subclassSelected: false,
   subclassInfo: null
 }
+var wizard = {
+  classIndex: 'wizard',
+  classLevel: 1,
+  isSpellcaster: true,
+  spellcasterInfo: casterObject,
+  subclassSelected: false,
+  subclassInfo: null
+}
 var classArray = [
-  barbarian, fighter, ranger, rogue
+  barbarian, fighter, ranger, rogue, wizard
 ];
 var alignmentArray = [
   'lawful-good', 'neutral-good', 'chaotic-good',
@@ -127,154 +152,6 @@ charRouter.post('/testFill', async (req, res) => {
     }
     await chars.insertMany(charArray);
     res.send({ message: "true" });
-  }
-  catch (err) {
-    res.send({message: err});
-  }
-});
-
-charRouter.post('/create', async (req, res) =>  {
-  try {
-    var char = {
-      _id: new ObjectId(),
-      userId: req.body.userId,
-      name: req.body.name,
-      overallLevel: req.body.overallLevel,
-      active: true,
-      favorite: false,
-      race: {
-        raceIndex: req.body.race.raceIndex,
-        chosenLanguageIndex: req.body.race.chosenLanguageIndex,
-        chosenProficiencyIndex: req.body.race.chosenProficiencyIndex
-      },
-      charClasses: { // Booleans for used classes
-        barbarian: req.body.charClasses.barbarian,
-        bard: req.body.charClasses.bard,
-        cleric: req.body.charClasses.cleric,
-        druid: req.body.charClasses.druid,
-        fighter: req.body.charClasses.fighter,
-        monk: req.body.charClasses.monk,
-        paladin: req.body.charClasses.paladin,
-        ranger: req.body.charClasses.ranger,
-        rogue: req.body.charClasses.rogue,
-        warlock: req.body.charClasses.warlock,
-        wizard: req.body.charClasses.wizard
-      },
-      barbarian: {
-        classIndex: req.body.charClass.classIndex,
-        classLevel: req.body.charClass.classLevel,
-        chosenProficiencyIndex: req.body.charClass.chosenProficiencyIndex,
-        spellcaster: req.body.charClass.spellcaster,
-        knownSpellsIndex: req.body.charClass.knownSpellsIndex,
-        preparedSpellsIndex: req.body.charClass.preparedSpellsIndex,
-        subclassIndex: req.body.charClass.subclassIndex
-      },
-      bard: {
-        classIndex: req.body.charClass.classIndex,
-        classLevel: req.body.charClass.classLevel,
-        chosenProficiencyIndex: req.body.charClass.chosenProficiencyIndex,
-        spellcaster: req.body.charClass.spellcaster,
-        knownSpellsIndex: req.body.charClass.knownSpellsIndex,
-        preparedSpellsIndex: req.body.charClass.preparedSpellsIndex,
-        subclassIndex: req.body.charClass.subclassIndex
-      },
-      cleric: {
-        classIndex: req.body.charClass.classIndex,
-        classLevel: req.body.charClass.classLevel,
-        chosenProficiencyIndex: req.body.charClass.chosenProficiencyIndex,
-        spellcaster: req.body.charClass.spellcaster,
-        knownSpellsIndex: req.body.charClass.knownSpellsIndex,
-        preparedSpellsIndex: req.body.charClass.preparedSpellsIndex,
-        subclassIndex: req.body.charClass.subclassIndex
-      },
-      druid: {
-        classIndex: req.body.charClass.classIndex,
-        classLevel: req.body.charClass.classLevel,
-        chosenProficiencyIndex: req.body.charClass.chosenProficiencyIndex,
-        spellcaster: req.body.charClass.spellcaster,
-        knownSpellsIndex: req.body.charClass.knownSpellsIndex,
-        preparedSpellsIndex: req.body.charClass.preparedSpellsIndex,
-        subclassIndex: req.body.charClass.subclassIndex
-      },
-      fighter: {
-        classIndex: req.body.charClass.classIndex,
-        classLevel: req.body.charClass.classLevel,
-        chosenProficiencyIndex: req.body.charClass.chosenProficiencyIndex,
-        spellcaster: req.body.charClass.spellcaster,
-        knownSpellsIndex: req.body.charClass.knownSpellsIndex,
-        preparedSpellsIndex: req.body.charClass.preparedSpellsIndex,
-        subclassIndex: req.body.charClass.subclassIndex
-      },
-      monk: {
-        classIndex: req.body.charClass.classIndex,
-        classLevel: req.body.charClass.classLevel,
-        chosenProficiencyIndex: req.body.charClass.chosenProficiencyIndex,
-        spellcaster: req.body.charClass.spellcaster,
-        knownSpellsIndex: req.body.charClass.knownSpellsIndex,
-        preparedSpellsIndex: req.body.charClass.preparedSpellsIndex,
-        subclassIndex: req.body.charClass.subclassIndex
-      },
-      paladin: {
-        classIndex: req.body.charClass.classIndex,
-        classLevel: req.body.charClass.classLevel,
-        chosenProficiencyIndex: req.body.charClass.chosenProficiencyIndex,
-        spellcaster: req.body.charClass.spellcaster,
-        knownSpellsIndex: req.body.charClass.knownSpellsIndex,
-        preparedSpellsIndex: req.body.charClass.preparedSpellsIndex,
-        subclassIndex: req.body.charClass.subclassIndex
-      },
-      ranger: {
-        classIndex: req.body.charClass.classIndex,
-        classLevel: req.body.charClass.classLevel,
-        chosenProficiencyIndex: req.body.charClass.chosenProficiencyIndex,
-        spellcaster: req.body.charClass.spellcaster,
-        knownSpellsIndex: req.body.charClass.knownSpellsIndex,
-        preparedSpellsIndex: req.body.charClass.preparedSpellsIndex,
-        subclassIndex: req.body.charClass.subclassIndex
-      },
-      rogue: {
-        classIndex: req.body.charClass.classIndex,
-        classLevel: req.body.charClass.classLevel,
-        chosenProficiencyIndex: req.body.charClass.chosenProficiencyIndex,
-        spellcaster: req.body.charClass.spellcaster,
-        knownSpellsIndex: req.body.charClass.knownSpellsIndex,
-        preparedSpellsIndex: req.body.charClass.preparedSpellsIndex,
-        subclassIndex: req.body.charClass.subclassIndex
-      },
-      warlock: {
-        classIndex: req.body.charClass.classIndex,
-        classLevel: req.body.charClass.classLevel,
-        chosenProficiencyIndex: req.body.charClass.chosenProficiencyIndex,
-        spellcaster: req.body.charClass.spellcaster,
-        knownSpellsIndex: req.body.charClass.knownSpellsIndex,
-        preparedSpellsIndex: req.body.charClass.preparedSpellsIndex,
-        subclassIndex: req.body.charClass.subclassIndex
-      },
-      wizard: {
-        classIndex: req.body.charClass.classIndex,
-        classLevel: req.body.charClass.classLevel,
-        chosenProficiencyIndex: req.body.charClass.chosenProficiencyIndex,
-        spellcaster: req.body.charClass.spellcaster,
-        knownSpellsIndex: req.body.charClass.knownSpellsIndex,
-        preparedSpellsIndex: req.body.charClass.preparedSpellsIndex,
-        subclassIndex: req.body.charClass.subclassIndex
-      },
-      abilityScores: {
-        strength: req.body.abilityScores.strength,
-        dexterity: req.body.abilityScores.dexterity,
-        constitution: req.body.abilityScores.constitution,
-        intelligence: req.body.abilityScores.intelligence,
-        wisdom: req.body.abilityScores.wisdom,
-        charisma: req.body.abilityScores.charisma
-      },
-      equipedItemsIndexes: req.body.equipedItemsIndexes,
-      inventoryItemsIndexes: req.body.inventoryItemsIndexes,
-      languagesIndex: req.body.languagesIndex,
-      proficienciesIndex: req.body.proficienciesIndex,
-      charactersShard: 0
-    };
-    chars.insertOne(char);
-    res.send({ message: "true", id: char._id });
   }
   catch (err) {
     res.send({message: err});
