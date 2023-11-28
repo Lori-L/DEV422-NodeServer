@@ -360,9 +360,9 @@ charRouter.post('/whole', async (req, res) => {
   try {
     var id = new ObjectId();
     var char = req.body;
-    char._id = id;
-    char.charactersShard = 7;
-    chars.insertOne(char);
+    char.char._id = id;
+    char.char.charactersShard = 7;
+    chars.insertOne(char.char);
     res.send({message : "Tried0"});
   }
   catch (err) {

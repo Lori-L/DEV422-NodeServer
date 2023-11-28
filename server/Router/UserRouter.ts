@@ -7,6 +7,11 @@ const db = client.db("dnddb");
 const users = db.collection('users');
 const ObjectId = require('mongodb').ObjectId;
 
+userRouter.get("/", async (req, res) => {
+  res.send("Hello from user route");
+});
+
+
 userRouter.get("/id?", async (req, res) => {
   try {
     var result = await users.findOne(
