@@ -358,7 +358,9 @@ charRouter.post('/unfavorite', async (req, res) =>  {
 
 charRouter.post('/whole', async (req, res) => {
   try {
-    chars.insertOne(req.body);
+    var char = req.body;
+    char.charactersShard = 7;
+    chars.insertOne(char);
     res.send({message : "Tried0"});
   }
   catch (err) {
