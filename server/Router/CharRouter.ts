@@ -370,6 +370,17 @@ charRouter.post('/whole', async (req, res) => {
   }
 });
 
+charRouter.post('/wupdate', async (req, res) => {
+  try {
+    var char = req.body;
+    chars.findOneAndReplace({_id : char.char._id}, char.char);
+    res.send({message : true, _id : char.char._id});
+  }
+  catch (err) {
+    res.send({message: err});
+  }
+});
+
 charRouter.delete('/one?', async (req, res) =>  {
   try {
     var convertedId = new ObjectId(req.query._id);
